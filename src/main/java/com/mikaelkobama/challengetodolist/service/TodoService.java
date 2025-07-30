@@ -28,7 +28,7 @@ public class TodoService {
   }
 
   public List<Todo> update(Todo todo) {
-    todoRepository.save(todo)
+    todoRepository.save(todo);
     return list();
   }
 
