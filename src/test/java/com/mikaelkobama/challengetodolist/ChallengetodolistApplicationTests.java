@@ -3,11 +3,11 @@ package com.mikaelkobama.challengetodolist;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import com.mikaelkobama.challengetodolist.entity.Todo;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-@SpringBootTest
-
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class ChallengetodolistApplicationTests {
   @Autowired
   private WebTestClient webTestClient;
@@ -26,6 +26,9 @@ class ChallengetodolistApplicationTests {
   }
 
   @Test
-  void testCreateTodoFailure() {}
+  void testCreateTodoFailure() {
+    webTestClient.post().uri("/todos").bodyValue(new Todo("", "", false, 0)).exchange()
+        .expectStatus().isBadRequest();
+  }
 
 }
